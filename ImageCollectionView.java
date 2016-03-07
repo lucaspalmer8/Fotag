@@ -3,21 +3,34 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-public class DrawingCanvas extends JPanel {//implements ViewInterface {
+public class ImageCollectionView extends JPanel implements ViewInterface {
 
 	//private Model m_model;
 	//private boolean m_fullView;
+	private ImageCollectionModel m_model;
+	private ArrayList<ImageView> m_imageViews = new ArrayList<ImageView>();
 
-   	public DrawingCanvas() {
+   	public ImageCollectionView(ImageCollectionModel model) {
+		m_model = model;
+		setLayout(new FlowLayout(FlowLayout.LEFT));
 //		setMaximumSize(new Dimension(400, 400));
-		setBorder(BorderFactory.createLineBorder(Color.black, 5));
-		setBackground(Color.BLACK);
+//		setBorder(BorderFactory.createLineBorder(Color.black, 5));
+//		setBackground(Color.BLACK);
     }
 
 	@Override
-    public Dimension getPreferredSize() {
-    	return new Dimension(200, 200);
-    }
+	public void notifyView() {
+		for(ImageView view : m_imageViews) {
+			remove(view);
+		}
+		m_imageViews = new ArrayList<ImageView>();
+		for(int i = 0; i < m_model.getImages().size(); i++) {
+			m_imageViews.add(new ImageView(m_model.getImages().get(i)));
+			add(m_imageViews.get(i));
+		}
+		revalidate();
+		repaint();
+	}
 
     //@Override
     //public Dimension getMaximumSize() {

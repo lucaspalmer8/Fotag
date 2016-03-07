@@ -20,10 +20,11 @@ public class ImageView extends JPanel {//implements ViewInterface {
 	private ImageModel m_model;
 	//To keep track of the rating bar we have to replace
 	private JPanel m_bottomPanel = new JPanel();
-	private RatingBar m_ratingBar = new RatingBar(0);
+	private RatingBar m_ratingBar;
 
    	public ImageView(ImageModel model) {
 		m_model = model;
+		m_ratingBar = new RatingBar(m_model.getRating());
 		setBorder(BorderFactory.createLineBorder(Color.black, 5));
 		setLayout(new BorderLayout());
 		setBackground(Color.BLACK);

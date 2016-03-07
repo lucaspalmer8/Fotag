@@ -13,6 +13,11 @@ public class ImageModel {
 		m_rating = 0;
     }
 
+	public ImageModel(String path, int rating) {
+		m_path = path;
+		m_rating = rating;
+	}
+
 	public int getRating() {
 		return m_rating;
 	}
