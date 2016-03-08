@@ -30,14 +30,16 @@ public class ImageCollectionView extends JPanel implements ViewInterface {
 		//If the component has not filled its parent container yet, the layout is undefined.
 		if (width == 0) return;
 //		System.out.println(width);
-		int numImages = m_model.getImages().size();
+		//We're only adding the images that are shown via the rating system.
+		int numImages = m_model.getVisibleImages();
 		int columns = width/(ImageView.WIDTH + 10);
-		int rows = numImages/columns + (numImages % columns == 0 ? 0 : 1);
+		//int rows = numImages/columns + (numImages % columns == 0 ? 0 : 1);
 		for(int i = 0; i < numImages; i+=columns) {
 			JPanel panel = new JPanel();
 			panel.setLayout(new GridLayout(0, columns));//new BoxLayout(panel, BoxLayout.X_AXIS));
 			for(int j = 0; j < columns; j++) {
-				if (i + j < m_imageViews.size()) {
+//				System.out.println(m_model.getRatingFilter());
+				if (i + j < m_imageViews.size() && m_imageViews.get(i + j).getRating() >= m_model.getRatingFilter()) {
 					JPanel panel1 = new JPanel();
 					panel1.setLayout(new BoxLayout(panel1, BoxLayout.X_AXIS));
 
@@ -74,11 +76,17 @@ public class ImageCollectionView extends JPanel implements ViewInterface {
 		//	remove(view);
 		//}
 		//removeAll();
-		m_imageViews = new ArrayList<ImageView>();
-		for(int i = 0; i < m_model.getImages().size(); i++) {
-			m_imageViews.add(new ImageView(m_model.getImages().get(i)));
+		for (ImageView view : m_imageViews) {
+            view.notifyView();
+        }
+		if (m_imageViews.size() != m_model.getImages().size()) {
+		
+			m_imageViews = new ArrayList<ImageView>();
+			for(int i = 0; i < m_model.getImages().size(); i++) {
+				m_imageViews.add(new ImageView(m_model.getImages().get(i)));
 			//add(m_imageViews.get(i));
 //			add(new JPanel());
+			}
 		}
 		//removeAll();
 		//revalidate();

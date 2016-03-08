@@ -9,6 +9,7 @@ public class ImageCollectionModel {
 	private ArrayList<ViewInterface> m_observers = new ArrayList<ViewInterface>();
 	private ArrayList<ImageModel> m_images = new ArrayList<ImageModel>();
 	private Fotag m_fotag;
+	private int m_ratingFilter = 0;
 
    	public ImageCollectionModel(Fotag fotag) {
 		m_fotag = fotag;
@@ -26,7 +27,7 @@ public class ImageCollectionModel {
 					String path = bufferedReader.readLine();
 					line = bufferedReader.readLine();
 					int rating = Integer.parseInt(line);
-					m_images.add(new ImageModel(path, rating));
+					m_images.add(new ImageModel(path, rating, this));
 				}
 			} finally {
 				bufferedReader.close();
@@ -36,12 +37,31 @@ public class ImageCollectionModel {
         }		
 	}
 
+	public void setRatingFilter(int filter) {
+		m_ratingFilter = filter;
+		notifyViews();
+	}
+
+	public int getRatingFilter() {
+		return m_ratingFilter;
+	}
+
+	public int getVisibleImages() {
+		int counter = 0;
+		for (ImageModel model : m_images) {
+			if (model.getRating() >= m_ratingFilter) {
+				counter++;
+			}
+		}
+		return counter;
+	}
+
 	public JFrame getFrame() {
 		return m_fotag.m_frame;
 	}
 
 	public void addImage(String path) {
-		m_images.add(new ImageModel(path, 0));
+		m_images.add(new ImageModel(path, 0, this));
 		notifyViews();
 	}
 

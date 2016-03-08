@@ -21,15 +21,31 @@ public class ImageCollectionListView extends JPanel implements ViewInterface {
 		//	remove(view);
 		//}
 		//removeAll();
-		m_imageViews = new ArrayList<ImageView>();
-		for(int i = 0; i < m_model.getImages().size(); i++) {
-			m_imageViews.add(new ImageView(m_model.getImages().get(i)));
+		for (ImageView view : m_imageViews) {
+            view.notifyView();
+        }
+
+		if (m_imageViews.size() != m_model.getImages().size()) {
+			//m_imageViews.add(new ImageView(m_model.getImages().get(m_model.getImages().size() - 1)));
+			//JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+			//panel.add(m_imageViews.get(m_imageViews.size() - 1));
+			//add(panel);
+			//revalidate();
+			//repaint()
+			m_imageViews = new ArrayList<ImageView>();
+			for(int i = 0; i < m_model.getImages().size(); i++) {
+				m_imageViews.add(new ImageView(m_model.getImages().get(i)));
+			}
 			//add(m_imageViews.get(i));
 //			add(new JPanel());
+			//}
 		}
 
 		removeAll();
 		for (ImageView view : m_imageViews) {
+			if (view.getRating() < m_model.getRatingFilter()) {
+				continue;
+			}
 			JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 			panel.add(view);
 			add(panel);

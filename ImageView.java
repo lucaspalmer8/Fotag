@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
-public class ImageView extends JPanel {//implements ViewInterface {
+public class ImageView extends JPanel implements ViewInterface {
 
 	public static int WIDTH = 250;
 	public static int HEIGHT = 300;
@@ -24,13 +24,33 @@ public class ImageView extends JPanel {//implements ViewInterface {
 	//To keep track of the rating bar we have to replace
 	private JPanel m_bottomPanel = new JPanel();
 	private RatingBar m_ratingBar;
+	private static Image STAR = null;
+	private static Image EMPTY_STAR = null;
 
    	public ImageView(ImageModel model) {
+		if (STAR == null) {
+            BufferedImage img = null;
+            Image newimg = null;
+            try {
+                img = ImageIO.read(new File("fullstar.png"));
+            } catch (IOException e) {}
+            STAR = img.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        }
+
+		if (EMPTY_STAR == null) {
+            BufferedImage img = null;
+            Image newimg = null;
+            try {
+                img = ImageIO.read(new File("emptystar.png"));
+            } catch (IOException e) {}
+            EMPTY_STAR = img.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        }
+
 		m_model = model;
 		m_ratingBar = new RatingBar(m_model.getRating());
-		setBorder(BorderFactory.createLineBorder(Color.black, 5));
+		setBorder(BorderFactory.createLineBorder(Color.black, 1));
 		setLayout(new BorderLayout());
-		setBackground(Color.BLACK);
+		setBackground(Color.WHITE);
 
 		BufferedImage img = null;
         Image newimg = null;
@@ -53,9 +73,12 @@ public class ImageView extends JPanel {//implements ViewInterface {
 			System.out.println(ex);
 		}
 		m_bottomPanel.setLayout(new BoxLayout(m_bottomPanel, BoxLayout.Y_AXIS));
+		m_bottomPanel.setBackground(Color.WHITE);
 		
 		JPanel date = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		date.setBackground(Color.WHITE);
 		JLabel dateCreated = new JLabel();
+		dateCreated.setBackground(Color.WHITE);
 	
 		String DATE_FORMAT = "MM/dd/yyyy";
     	SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
@@ -63,11 +86,23 @@ public class ImageView extends JPanel {//implements ViewInterface {
 
 		dateCreated.setText(sdf.format(new Date(attrs.creationTime().toMillis())).toString());
 		date.add(dateCreated);
+		date.setBackground(Color.WHITE);
 		JPanel name = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		name.setBackground(Color.WHITE);
 		JLabel fileName = new JLabel(new File(m_model.getPath()).getName());
+		fileName.setBackground(Color.WHITE);
 		name.add(fileName);
 
 		date.add(m_ratingBar);
+		JButton reset = new JButton("0");
+		reset.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				m_model.setRating(0);
+                updateView();
+			}
+		});
+		date.add(reset);
 
 		m_bottomPanel.add(name);
 		m_bottomPanel.add(date);
@@ -75,7 +110,16 @@ public class ImageView extends JPanel {//implements ViewInterface {
 
 		add(m_bottomPanel, BorderLayout.SOUTH);
     }
+
+	public int getRating() {
+		return m_model.getRating();
+	}
 	
+	@Override
+	public void notifyView() {
+		updateView();
+	}
+
 	private void updateView() {
 		int rating = m_model.getRating();
 		//m_bottomPanel.remove(m_ratingBar);
@@ -90,14 +134,10 @@ public class ImageView extends JPanel {//implements ViewInterface {
 		private int m_index;
 
 		public FullStar(int index) {
+			setBackground(Color.WHITE);
+			setOpaque(true);
 			m_index = index;
-			BufferedImage img = null;
-            Image newimg = null;
-            try {
-                img = ImageIO.read(new File("fullstar.png"));
-            } catch (IOException e) {}
-            newimg = img.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-			setIcon(new ImageIcon(newimg));
+			setIcon(new ImageIcon(STAR));
 			addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -112,14 +152,10 @@ public class ImageView extends JPanel {//implements ViewInterface {
         private int m_index;
 
         public EmptyStar(int index) {
+			setBackground(Color.WHITE);
+            setOpaque(true);
 			m_index = index;
-            BufferedImage img = null;
-            Image newimg = null;
-            try {
-                img = ImageIO.read(new File("emptystar.png"));
-            } catch (IOException e) {}
-            newimg = img.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-            setIcon(new ImageIcon(newimg));
+            setIcon(new ImageIcon(EMPTY_STAR));
             addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
@@ -131,8 +167,11 @@ public class ImageView extends JPanel {//implements ViewInterface {
     }
 
 	private class RatingBar extends JPanel {
-
+		private int m_rating;
+	
 		public RatingBar(int rating) {
+			setBackground(Color.WHITE);
+			m_rating = rating;
 			JPanel panel = new JPanel();
 			panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 			for (int i = 1; i <= rating; i++) {
@@ -146,6 +185,10 @@ public class ImageView extends JPanel {//implements ViewInterface {
 		}
 		
 		public void updateRatingBar(int rating) {
+			if (rating == m_rating) {
+				return;
+			}
+			m_rating = rating;
 			removeAll();
 			JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));

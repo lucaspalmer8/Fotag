@@ -1,9 +1,13 @@
-4
+6
 /home/lucas/Desktop/dolphin.jpg
-1
+5
 /home/lucas/Desktop/weasel.jpg
 5
+/home/lucas/Desktop/weasel.jpg
+2
 /home/lucas/Desktop/polar_bear.jpg
 3
-/home/lucas/Desktop/dolphin.jpg
-5
+/home/lucas/Desktop/weasel.jpg
+3
+/home/lucas/Desktop/weasel.jpg
+1
