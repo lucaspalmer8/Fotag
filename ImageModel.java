@@ -4,7 +4,6 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 public class ImageModel {
-
 	private String m_path;
 	private int m_rating;
 

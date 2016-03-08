@@ -12,30 +12,84 @@ public class ImageCollectionView extends JPanel implements ViewInterface {
 
    	public ImageCollectionView(ImageCollectionModel model) {
 		m_model = model;
-		setLayout(new FlowLayout(FlowLayout.LEFT));
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));//FlowLayout(FlowLayout.LEFT));
+		addComponentListener(new ComponentAdapter() {
+			@Override
+    		public void componentResized(ComponentEvent e) {
+    			resetLayout();
+			}
+		});
 //		setMaximumSize(new Dimension(400, 400));
 //		setBorder(BorderFactory.createLineBorder(Color.black, 5));
 //		setBackground(Color.BLACK);
     }
 
-	@Override
-	public void notifyView() {
-		for(ImageView view : m_imageViews) {
-			remove(view);
+	public void resetLayout() {
+		removeAll();
+		int width = getWidth();
+		//If the component has not filled its parent container yet, the layout is undefined.
+		if (width == 0) return;
+//		System.out.println(width);
+		int numImages = m_model.getImages().size();
+		int columns = width/(ImageView.WIDTH + 10);
+		int rows = numImages/columns + (numImages % columns == 0 ? 0 : 1);
+		for(int i = 0; i < numImages; i+=columns) {
+			JPanel panel = new JPanel();
+			panel.setLayout(new GridLayout(0, columns));//new BoxLayout(panel, BoxLayout.X_AXIS));
+			for(int j = 0; j < columns; j++) {
+				if (i + j < m_imageViews.size()) {
+					JPanel panel1 = new JPanel();
+					panel1.setLayout(new BoxLayout(panel1, BoxLayout.X_AXIS));
+
+					JPanel panel2 = new JPanel();
+					panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
+
+					panel1.add(new JPanel());
+					panel1.add(panel2);
+					panel1.add(new JPanel());
+
+					panel2.add(new JPanel());
+					panel2.add(m_imageViews.get(i + j));
+					panel2.add(new JPanel());
+
+					//JPanel finalPanel = new JPanel(new BorderLayout());
+					//finalPanel.add(panel1, BorderLayout.CENTER);
+
+					panel.add(panel1);
+				}
+			}
+			add(panel);
 		}
-		m_imageViews = new ArrayList<ImageView>();
-		for(int i = 0; i < m_model.getImages().size(); i++) {
-			m_imageViews.add(new ImageView(m_model.getImages().get(i)));
-			add(m_imageViews.get(i));
-		}
+		//for(int i = numImages; i < rows*columns; i++) {
+		//  add(new JPanel());
+		//}
 		revalidate();
 		repaint();
 	}
 
-    //@Override
-    //public Dimension getMaximumSize() {
-    //    return new Dimension(100, 100);
-   // }
+
+	@Override
+	public void notifyView() {
+		//for(ImageView view : m_imageViews) {
+		//	remove(view);
+		//}
+		//removeAll();
+		m_imageViews = new ArrayList<ImageView>();
+		for(int i = 0; i < m_model.getImages().size(); i++) {
+			m_imageViews.add(new ImageView(m_model.getImages().get(i)));
+			//add(m_imageViews.get(i));
+//			add(new JPanel());
+		}
+		//removeAll();
+		//revalidate();
+		//repaint();
+		resetLayout();
+	}
+
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(getParent().getWidth(), (int)super.getPreferredSize().getHeight());
+    }
 
 
 	@Override    

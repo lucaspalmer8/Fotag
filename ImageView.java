@@ -14,9 +14,12 @@ import java.nio.file.attribute.*;
 import java.io.IOException;
 
 import java.util.Date;
+import java.text.SimpleDateFormat;
 
 public class ImageView extends JPanel {//implements ViewInterface {
 
+	public static int WIDTH = 250;
+	public static int HEIGHT = 300;
 	private ImageModel m_model;
 	//To keep track of the rating bar we have to replace
 	private JPanel m_bottomPanel = new JPanel();
@@ -36,7 +39,7 @@ public class ImageView extends JPanel {//implements ViewInterface {
 		} catch (IOException ex) {
 			System.out.println(ex);
 		}
-		newimg = img.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+		newimg = img.getScaledInstance(200, 220, Image.SCALE_SMOOTH);
 
 		JLabel wIcon = new JLabel(new ImageIcon(newimg));
 		add(wIcon, BorderLayout.CENTER);
@@ -53,25 +56,34 @@ public class ImageView extends JPanel {//implements ViewInterface {
 		
 		JPanel date = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel dateCreated = new JLabel();
-		dateCreated.setText(new Date(attrs.creationTime().toMillis()).toString());
+	
+		String DATE_FORMAT = "MM/dd/yyyy";
+    	SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+    	//System.out.println("Formated Date " + sdf.format(date));
+
+		dateCreated.setText(sdf.format(new Date(attrs.creationTime().toMillis())).toString());
 		date.add(dateCreated);
 		JPanel name = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JLabel fileName = new JLabel(new File(m_model.getPath()).getName());
 		name.add(fileName);
+
+		date.add(m_ratingBar);
+
 		m_bottomPanel.add(name);
 		m_bottomPanel.add(date);
-		m_bottomPanel.add(m_ratingBar);
+		//m_bottomPanel.add(m_ratingBar);
 
 		add(m_bottomPanel, BorderLayout.SOUTH);
     }
 	
 	private void updateView() {
 		int rating = m_model.getRating();
-		m_bottomPanel.remove(m_ratingBar);
-		m_ratingBar = new RatingBar(rating);
-		m_bottomPanel.add(m_ratingBar);
-		revalidate();
-		repaint();
+		//m_bottomPanel.remove(m_ratingBar);
+		//m_ratingBar = new RatingBar(rating);
+		//m_bottomPanel.add(m_ratingBar);
+		m_ratingBar.updateRatingBar(rating);
+		//revalidate();
+		//repaint();
 	}
 
 	private class FullStar extends JLabel {
@@ -112,7 +124,7 @@ public class ImageView extends JPanel {//implements ViewInterface {
                 @Override
                 public void mousePressed(MouseEvent e) {
 					m_model.setRating(m_index);
-                    updateView();
+					updateView();
                 }
             });
         }
@@ -132,12 +144,37 @@ public class ImageView extends JPanel {//implements ViewInterface {
 			setLayout(new FlowLayout(FlowLayout.LEFT));
 			add(panel);
 		}
+		
+		public void updateRatingBar(int rating) {
+			removeAll();
+			JPanel panel = new JPanel();
+            panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+            for (int i = 1; i <= rating; i++) {
+                panel.add(new FullStar(i));
+            }
+            for (int i = rating + 1; i <= 5; i++) {
+                panel.add(new EmptyStar(i));
+            }
+			add(panel);
+			revalidate();
+			repaint();
+		}
 	}
 
 	@Override
     public Dimension getPreferredSize() {
-    	return new Dimension(250, 300);
+   		return new Dimension(WIDTH, HEIGHT);
     }
+
+	@Override
+	public Dimension getMaximumSize() {
+		return new Dimension(WIDTH, HEIGHT);
+	}
+
+	@Override
+	public Dimension getMinimumSize() {
+		return new Dimension(WIDTH, HEIGHT);
+	}
 
 	@Override    
    	public void paintComponent(Graphics g) {

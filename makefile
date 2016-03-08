@@ -10,7 +10,8 @@ CLASSES = \
 	Fotag.java \
 	ImageModel.java \
 	ImageView.java \
-    ViewInterface.java
+    ViewInterface.java \
+	Toolbar.java
 
 MAIN = Fotag
 

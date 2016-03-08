@@ -8,8 +8,10 @@ public class ImageCollectionModel {
 
 	private ArrayList<ViewInterface> m_observers = new ArrayList<ViewInterface>();
 	private ArrayList<ImageModel> m_images = new ArrayList<ImageModel>();
+	private Fotag m_fotag;
 
-   	public ImageCollectionModel() {
+   	public ImageCollectionModel(Fotag fotag) {
+		m_fotag = fotag;
 		try {
 			FileReader fileReader = new FileReader("laststate.txt");
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -33,6 +35,31 @@ public class ImageCollectionModel {
         } catch(IOException ex) {
         }		
 	}
+
+	public JFrame getFrame() {
+		return m_fotag.m_frame;
+	}
+
+	public void addImage(String path) {
+		m_images.add(new ImageModel(path, 0));
+		notifyViews();
+	}
+
+	public void enableGridView() {
+		m_fotag.m_panel.remove(m_fotag.m_listView);
+		m_fotag.m_panel.add(m_fotag.m_gridView, BorderLayout.CENTER);
+		m_fotag.m_panel.revalidate();
+		m_fotag.m_panel.repaint();
+		notifyViews();
+	}
+
+	public void enableListView() {
+        m_fotag.m_panel.remove(m_fotag.m_gridView);
+        m_fotag.m_panel.add(m_fotag.m_listView, BorderLayout.CENTER);
+        m_fotag.m_panel.revalidate();
+        m_fotag.m_panel.repaint();
+		notifyViews();
+    }
 
 	public void addObserver(ViewInterface view) {
 		m_observers.add(view);
