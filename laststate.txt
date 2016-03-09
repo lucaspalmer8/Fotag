@@ -1,13 +1,3 @@
-6
-/home/lucas/a3/fullstar.png
-3
-/home/lucas/a3/grid.png
-3
-/home/lucas/a3/fullstar.png
-3
-/home/lucas/a3/grid.png
-3
-/home/lucas/Desktop/dolphin.jpg
-0
-/home/lucas/Desktop/weasel.jpg
+1
+/home/lucas/a3/emptystar.png
 0

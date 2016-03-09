@@ -32,4 +32,8 @@ public class ImageModel {
 	public String getPath() {
 		return m_path;
 	}
+
+	public JFrame getFrame() {
+		return m_model.getFrame();
+	}
 }

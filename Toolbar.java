@@ -23,7 +23,7 @@ public class Toolbar extends JPanel implements ViewInterface {
             try {
                 img = ImageIO.read(new File("fullstar.png"));
             } catch (IOException e) {}
-            STAR = img.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+            STAR = img.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
         }
 
         if (EMPTY_STAR == null) {
@@ -32,13 +32,13 @@ public class Toolbar extends JPanel implements ViewInterface {
             try {
                 img = ImageIO.read(new File("emptystar.png"));
             } catch (IOException e) {}
-            EMPTY_STAR = img.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+            EMPTY_STAR = img.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
         }
 
 		m_chooser.setMultiSelectionEnabled(true);
 		m_model = model;
 		m_ratingBar = new RatingBar(0);
-		setBorder(BorderFactory.createLineBorder(Color.black, 5));
+		setBorder(BorderFactory.createLineBorder(Color.black, 2));
 		setBackground(Color.WHITE);
 		setLayout(new BorderLayout());
 	
@@ -47,7 +47,7 @@ public class Toolbar extends JPanel implements ViewInterface {
         try {
             img = ImageIO.read(new File("grid.png"));
         } catch (IOException e) {}
-        newimg = img.getScaledInstance(50, 70, Image.SCALE_SMOOTH);
+        newimg = img.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 
 		m_gridView = new JButton(new ImageIcon(newimg));
 		m_gridView.addActionListener(new ActionListener() {
@@ -62,16 +62,16 @@ public class Toolbar extends JPanel implements ViewInterface {
 			}
 		});
 		m_gridView.setBackground(Color.WHITE);
-//		m_gridView.setFocusPainted(false);
-//		m_gridView.setBorderPainted(false);
-		m_gridView.setPreferredSize(new Dimension(50, 70));
+		m_gridView.setFocusPainted(false);
+		//m_gridView.setBorderPainted(false);
+		m_gridView.setPreferredSize(new Dimension(50, 50));
 		m_gridView.setSelected(true);	
 		m_gridView.setEnabled(false);
 
 		try {
             img = ImageIO.read(new File("list.png"));
         } catch (IOException e) {}
-        newimg = img.getScaledInstance(50, 70, Image.SCALE_SMOOTH);
+        newimg = img.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 
 		m_listView = new JButton(new ImageIcon(newimg));
         m_listView.addActionListener(new ActionListener() {
@@ -86,9 +86,9 @@ public class Toolbar extends JPanel implements ViewInterface {
             }
         });
 		m_listView.setBackground(Color.WHITE);
-//		m_listView.setFocusPainted(false);
+		m_listView.setFocusPainted(false);
 //		m_listView.setBorderPainted(false);
-		m_listView.setPreferredSize(new Dimension(50, 70));
+		m_listView.setPreferredSize(new Dimension(50, 50));
         
 		ActionListener loadPictureListener = new ActionListener() {
             @Override
@@ -125,13 +125,13 @@ public class Toolbar extends JPanel implements ViewInterface {
 		try {
             img = ImageIO.read(new File("loadicon.png"));
         } catch (IOException e) {}
-        newimg = img.getScaledInstance(50, 70, Image.SCALE_SMOOTH);
+        newimg = img.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 
 		JButton loadButton = new JButton(new ImageIcon(newimg));
         loadButton.setBackground(Color.WHITE);
-        //m_list.setFocusPainted(false);
+        loadButton.setFocusPainted(false);
         //m_listView.setBorderPainted(false);
-        loadButton.setPreferredSize(new Dimension(50, 70));
+        loadButton.setPreferredSize(new Dimension(50, 50));
 		loadButton.addActionListener(loadPictureListener);
 	
 		JPanel panel = new JPanel();
@@ -165,7 +165,12 @@ public class Toolbar extends JPanel implements ViewInterface {
 		spare1.setBackground(Color.WHITE);
 		spare2.setBackground(Color.WHITE);
 
-		JButton resetButton = new JButton("0");
+        try {
+            img = ImageIO.read(new File("reset.png"));
+        } catch (IOException e) {}
+        newimg = img.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+
+		JButton resetButton = new JButton(new ImageIcon(newimg));
 		resetButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -174,6 +179,8 @@ public class Toolbar extends JPanel implements ViewInterface {
                 //updateView();
             }
         });
+		resetButton.setPreferredSize(new Dimension(25, 25));
+		resetButton.setFocusPainted(false);
 
 		JPanel theOne = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		theOne.setBackground(Color.WHITE);

@@ -24,6 +24,7 @@ public class ImageView extends JPanel implements ViewInterface {
 	//To keep track of the rating bar we have to replace
 	private JPanel m_bottomPanel = new JPanel();
 	private RatingBar m_ratingBar;
+	private JDialog m_dialog;
 	private static Image STAR = null;
 	private static Image EMPTY_STAR = null;
 
@@ -63,6 +64,22 @@ public class ImageView extends JPanel implements ViewInterface {
 
 		JLabel wIcon = new JLabel(new ImageIcon(newimg));
 		add(wIcon, BorderLayout.CENTER);
+
+		m_dialog = new JDialog();
+        m_dialog.setPreferredSize(new Dimension(500,500));
+        m_dialog.setResizable(false);
+        Image zoom = img.getScaledInstance(500, 500, Image.SCALE_SMOOTH);
+        JLabel labelpic = new JLabel(new ImageIcon(zoom));
+        m_dialog.add(labelpic);
+        m_dialog.pack();
+        wIcon.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                m_dialog.setLocationRelativeTo(m_model.getFrame());
+                m_dialog.setVisible(true);
+            }
+        });
+
 		//add(m_currentRatingBar, BorderLayout.SOUTH);
 
 		Path file = Paths.get(m_model.getPath());
@@ -94,7 +111,12 @@ public class ImageView extends JPanel implements ViewInterface {
 		name.add(fileName);
 
 		date.add(m_ratingBar);
-		JButton reset = new JButton("0");
+
+		try {
+            img = ImageIO.read(new File("reset.png"));
+        } catch (IOException e) {}
+        newimg = img.getScaledInstance(15, 15, Image.SCALE_SMOOTH);
+		JButton reset = new JButton(new ImageIcon(newimg));
 		reset.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -102,6 +124,9 @@ public class ImageView extends JPanel implements ViewInterface {
                 updateView();
 			}
 		});
+		reset.setPreferredSize(new Dimension(20, 20));
+        reset.setFocusPainted(false);
+
 		date.add(reset);
 
 		m_bottomPanel.add(name);
