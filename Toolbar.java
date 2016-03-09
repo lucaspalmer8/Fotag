@@ -35,6 +35,7 @@ public class Toolbar extends JPanel implements ViewInterface {
             EMPTY_STAR = img.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
         }
 
+		m_chooser.setMultiSelectionEnabled(true);
 		m_model = model;
 		m_ratingBar = new RatingBar(0);
 		setBorder(BorderFactory.createLineBorder(Color.black, 5));
@@ -46,7 +47,7 @@ public class Toolbar extends JPanel implements ViewInterface {
         try {
             img = ImageIO.read(new File("grid.png"));
         } catch (IOException e) {}
-        newimg = img.getScaledInstance(70, 90, Image.SCALE_SMOOTH);
+        newimg = img.getScaledInstance(50, 70, Image.SCALE_SMOOTH);
 
 		m_gridView = new JButton(new ImageIcon(newimg));
 		m_gridView.addActionListener(new ActionListener() {
@@ -63,14 +64,14 @@ public class Toolbar extends JPanel implements ViewInterface {
 		m_gridView.setBackground(Color.WHITE);
 //		m_gridView.setFocusPainted(false);
 //		m_gridView.setBorderPainted(false);
-		m_gridView.setPreferredSize(new Dimension(70, 90));
+		m_gridView.setPreferredSize(new Dimension(50, 70));
 		m_gridView.setSelected(true);	
 		m_gridView.setEnabled(false);
 
 		try {
             img = ImageIO.read(new File("list.png"));
         } catch (IOException e) {}
-        newimg = img.getScaledInstance(70, 90, Image.SCALE_SMOOTH);
+        newimg = img.getScaledInstance(50, 70, Image.SCALE_SMOOTH);
 
 		m_listView = new JButton(new ImageIcon(newimg));
         m_listView.addActionListener(new ActionListener() {
@@ -87,50 +88,50 @@ public class Toolbar extends JPanel implements ViewInterface {
 		m_listView.setBackground(Color.WHITE);
 //		m_listView.setFocusPainted(false);
 //		m_listView.setBorderPainted(false);
-		m_listView.setPreferredSize(new Dimension(70, 90));
+		m_listView.setPreferredSize(new Dimension(50, 70));
         
 		ActionListener loadPictureListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int returnVal = m_chooser.showOpenDialog(m_model.getFrame());
-				if (m_chooser.getSelectedFile() == null || returnVal > 0) {
+				File[] files = m_chooser.getSelectedFiles();
+				//System.out.println("lendghtlak :::: " +files.length);
+				if (files.length == 0 || returnVal > 0) {
 					return;
 				}
-				System.out.println(returnVal);
-                String path = m_chooser.getSelectedFile().getAbsolutePath();
-                String fileName = m_chooser.getSelectedFile().getName();
+				//System.out.println(returnVal);
+                //String path = m_chooser.getSelectedFile().getAbsolutePath();
+                //String fileName = m_chooser.getSelectedFile().getName();
 
 				BufferedImage img = null;
 		        Image newimg = null;
-				try {
-            		img = ImageIO.read(new File(path));
-        		} catch (Exception ex) {}
+				for (File file : files) {
+					try {
+            			img = ImageIO.read(file);
+        			} catch (Exception ex) {}
 				
-				if (img == null) {
-					JOptionPane.showMessageDialog(m_model.getFrame(), "You must select a photo.");
-                    return;
+					if (img == null) {
+						JOptionPane.showMessageDialog(m_model.getFrame(), "You must only select photos.");
+                    	return;
+					}
 				}	
-
-				m_model.addImage(path);
+	
+				for (File file : files) {
+					m_model.addImage(file.getAbsolutePath());
+				}
 			}
 		};
 
 		try {
             img = ImageIO.read(new File("loadicon.png"));
         } catch (IOException e) {}
-        newimg = img.getScaledInstance(70, 90, Image.SCALE_SMOOTH);
+        newimg = img.getScaledInstance(50, 70, Image.SCALE_SMOOTH);
 
 		JButton loadButton = new JButton(new ImageIcon(newimg));
-        loadButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	System.out.println("Ehhhh");
-			}
-        });
         loadButton.setBackground(Color.WHITE);
         //m_list.setFocusPainted(false);
         //m_listView.setBorderPainted(false);
-        loadButton.setPreferredSize(new Dimension(70, 90));
+        loadButton.setPreferredSize(new Dimension(50, 70));
 		loadButton.addActionListener(loadPictureListener);
 	
 		JPanel panel = new JPanel();
@@ -148,7 +149,7 @@ public class Toolbar extends JPanel implements ViewInterface {
 		JLabel label = new JLabel();
 		label.setFont(new Font("Courier New", Font.BOLD, 60));
 		label.setText(" Fotag!");
-		label.setPreferredSize(new Dimension(300, 100));
+		//label.setPreferredSize(new Dimension(300, 100));
 //		center.add(s3);
 //		center.add(label);
 //		center.add(s4);
@@ -265,7 +266,7 @@ public class Toolbar extends JPanel implements ViewInterface {
 
 	@Override
     public Dimension getPreferredSize() {
-    	return new Dimension(100, 100);
+    	return new Dimension(100, 80);
     }
 
 	@Override

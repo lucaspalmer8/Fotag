@@ -34,12 +34,48 @@ public class ImageCollectionView extends JPanel implements ViewInterface {
 		int numImages = m_model.getVisibleImages();
 		int columns = width/(ImageView.WIDTH + 10);
 		//int rows = numImages/columns + (numImages % columns == 0 ? 0 : 1);
-		for(int i = 0; i < numImages; i+=columns) {
+		int addedToRow = 0;
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridLayout(0, columns));
+		for (int i = 0; i < m_model.getImages().size(); i++) {
+			if (m_model.getImages().get(i).getRating() < m_model.getRatingFilter()) {
+				continue;
+			}
+			if (addedToRow >= columns) {
+				add(panel);
+                addedToRow = 0;
+                panel = new JPanel();
+                panel.setLayout(new GridLayout(0, columns));
+			}
+			JPanel panel1 = new JPanel();
+            panel1.setLayout(new BoxLayout(panel1, BoxLayout.X_AXIS));
+
+            JPanel panel2 = new JPanel();
+            panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
+
+            panel1.add(new JPanel());
+            panel1.add(panel2);
+            panel1.add(new JPanel());
+
+            panel2.add(new JPanel());
+            panel2.add(m_imageViews.get(i));
+            panel2.add(new JPanel());
+
+			panel.add(panel1);
+			addedToRow++;
+		}
+		if (addedToRow > 0) {
+			add(panel);
+		}
+
+
+	/*	for(int i = 0; i < m_model.getImages().size(); i+=columns) {
 			JPanel panel = new JPanel();
 			panel.setLayout(new GridLayout(0, columns));//new BoxLayout(panel, BoxLayout.X_AXIS));
 			for(int j = 0; j < columns; j++) {
+				if (i + j >= m_imageViews.size()) break;
 //				System.out.println(m_model.getRatingFilter());
-				if (i + j < m_imageViews.size() && m_imageViews.get(i + j).getRating() >= m_model.getRatingFilter()) {
+				if (m_imageViews.get(i + j).getRating() >= m_model.getRatingFilter()) {
 					JPanel panel1 = new JPanel();
 					panel1.setLayout(new BoxLayout(panel1, BoxLayout.X_AXIS));
 
@@ -61,7 +97,7 @@ public class ImageCollectionView extends JPanel implements ViewInterface {
 				}
 			}
 			add(panel);
-		}
+		}*/
 		//for(int i = numImages; i < rows*columns; i++) {
 		//  add(new JPanel());
 		//}
