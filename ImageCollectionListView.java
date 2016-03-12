@@ -8,7 +8,7 @@ public class ImageCollectionListView extends JPanel implements ViewInterface {
 	//private Model m_model;
 	//private boolean m_fullView;
 	private ImageCollectionModel m_model;
-	private ArrayList<ImageView> m_imageViews = new ArrayList<ImageView>();
+	private ArrayList<ImageListView> m_imageViews = new ArrayList<ImageListView>();
 
    	public ImageCollectionListView(ImageCollectionModel model) {
 		m_model = model;
@@ -21,7 +21,7 @@ public class ImageCollectionListView extends JPanel implements ViewInterface {
 		//	remove(view);
 		//}
 		//removeAll();
-		for (ImageView view : m_imageViews) {
+		for (ImageListView view : m_imageViews) {
             view.notifyView();
         }
 
@@ -32,9 +32,9 @@ public class ImageCollectionListView extends JPanel implements ViewInterface {
 			//add(panel);
 			//revalidate();
 			//repaint()
-			m_imageViews = new ArrayList<ImageView>();
+			m_imageViews = new ArrayList<ImageListView>();
 			for(int i = 0; i < m_model.getImages().size(); i++) {
-				m_imageViews.add(new ImageView(m_model.getImages().get(i)));
+				m_imageViews.add(new ImageListView(m_model.getImages().get(i)));
 			}
 			//add(m_imageViews.get(i));
 //			add(new JPanel());
@@ -42,7 +42,7 @@ public class ImageCollectionListView extends JPanel implements ViewInterface {
 		}
 
 		removeAll();
-		for (ImageView view : m_imageViews) {
+		for (ImageListView view : m_imageViews) {
 			if (view.getRating() < m_model.getRatingFilter()) {
 				continue;
 			}

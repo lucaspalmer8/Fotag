@@ -16,19 +16,19 @@ import java.io.IOException;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
-public class ImageView extends JPanel implements ViewInterface {
+public class ImageListView extends JPanel implements ViewInterface {
 
-	public static int WIDTH = 250;
-	public static int HEIGHT = 300;
+	public static int WIDTH = 360;
+	public static int HEIGHT = 240;
 	private ImageModel m_model;
 	//To keep track of the rating bar we have to replace
-	private JPanel m_bottomPanel = new JPanel();
+	private JPanel m_rightPanel = new JPanel();
 	private RatingBar m_ratingBar;
 	private JDialog m_dialog;
 	private static Image STAR = null;
 	private static Image EMPTY_STAR = null;
 
-   	public ImageView(ImageModel model) {
+   	public ImageListView(ImageModel model) {
 		if (STAR == null) {
             BufferedImage img = null;
             Image newimg = null;
@@ -89,8 +89,8 @@ public class ImageView extends JPanel implements ViewInterface {
 		} catch (IOException ex) {
 			System.out.println(ex);
 		}
-		m_bottomPanel.setLayout(new BoxLayout(m_bottomPanel, BoxLayout.Y_AXIS));
-		m_bottomPanel.setBackground(Color.WHITE);
+		m_rightPanel.setLayout(new BoxLayout(m_rightPanel, BoxLayout.Y_AXIS));
+		m_rightPanel.setBackground(Color.WHITE);
 		
 		JPanel date = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		date.setBackground(Color.WHITE);
@@ -104,13 +104,20 @@ public class ImageView extends JPanel implements ViewInterface {
 		dateCreated.setText(sdf.format(new Date(attrs.creationTime().toMillis())).toString());
 		date.add(dateCreated);
 		date.setBackground(Color.WHITE);
+		
 		JPanel name = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		name.setBackground(Color.WHITE);
 		JLabel fileName = new JLabel(new File(m_model.getPath()).getName());
 		fileName.setBackground(Color.WHITE);
 		name.add(fileName);
 
-		date.add(m_ratingBar);
+		//m_rightPanel.add(name);
+		//m_rightPanel.add(date);
+
+		//m_rightPanel.add(m_ratingBar);
+
+		JPanel bar = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		bar.add(m_ratingBar);
 
 		try {
             img = ImageIO.read(new File("reset.png"));
@@ -127,13 +134,13 @@ public class ImageView extends JPanel implements ViewInterface {
 		reset.setPreferredSize(new Dimension(20, 20));
         reset.setFocusPainted(false);
 
-		date.add(reset);
+		bar.add(reset);
 
-		m_bottomPanel.add(name);
-		m_bottomPanel.add(date);
-		//m_bottomPanel.add(m_ratingBar);
+		m_rightPanel.add(name);
+		m_rightPanel.add(date);
+		m_rightPanel.add(bar);
 
-		add(m_bottomPanel, BorderLayout.SOUTH);
+		add(m_rightPanel, BorderLayout.EAST);
     }
 
 	public int getRating() {
