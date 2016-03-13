@@ -76,8 +76,8 @@ public class ImageListView extends AbstractImageView {
 		rightPanel.add(name);
 		rightPanel.add(date);
 		rightPanel.add(bar);
-		rightPanel.setPreferredSize(new Dimension((int)rightPanel.getPreferredSize().getWidth(), 120));
-		rightPanel.setMaximumSize(new Dimension((int)rightPanel.getMaximumSize().getWidth(), 120));
+		rightPanel.setPreferredSize(new Dimension(150, 120));
+		rightPanel.setMaximumSize(new Dimension(150, 120));
 
 		JPanel spare = new JPanel();
 		JPanel spare2 = new JPanel();

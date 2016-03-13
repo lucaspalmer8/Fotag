@@ -51,17 +51,28 @@ public abstract class AbstractImageView extends JPanel implements ViewInterface 
 		Image newimg = null;
 		try {
 			img = ImageIO.read(new File(m_model.getPath()));
-		} catch (IOException ex) {
-			System.out.println(ex);
+		} catch (IOException ex) {}
+		int width = img.getWidth();
+		int height = img.getHeight();
+		float scale;
+		if (width/200f >= height/220f) {
+			scale = 200f/width;
+		} else {
+			scale = 220f/height;
 		}
-		newimg = img.getScaledInstance(200, 220, Image.SCALE_SMOOTH);
+		newimg = img.getScaledInstance((int)(scale*width), (int)(scale*height), Image.SCALE_SMOOTH);
 		JLabel wIcon = new JLabel(new ImageIcon(newimg));
 		add(wIcon, BorderLayout.CENTER);
 
+		if (width >= height) {
+			scale = 600f/width;
+		} else {
+			scale = 600f/height;
+		}
 		m_dialog = new JDialog();
-		m_dialog.setPreferredSize(new Dimension(500,500));
+		m_dialog.setPreferredSize(new Dimension((int)(scale*width), (int)(scale*height)));
 		m_dialog.setResizable(false);
-		Image zoom = img.getScaledInstance(500, 500, Image.SCALE_SMOOTH);
+		Image zoom = img.getScaledInstance((int)(scale*width), (int)(scale*height), Image.SCALE_SMOOTH);
 		JLabel labelpic = new JLabel(new ImageIcon(zoom));
 		m_dialog.add(labelpic);
 		m_dialog.pack();
