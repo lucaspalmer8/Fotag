@@ -1,11 +1,11 @@
 5
 /home/lucas/a3/emptystar.png
-1
+0
 /home/lucas/Desktop/weasel.jpg
-0
+2
 /home/lucas/Desktop/dolphin.jpg
-0
+3
 /home/lucas/Desktop/dolphin.jpg
-0
+4
 /home/lucas/Desktop/dolphin.jpg
-0
+4

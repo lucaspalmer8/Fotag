@@ -45,7 +45,7 @@ public class Fotag {
         m_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         m_frame.setResizable(true);
         m_frame.setSize(900, 600);
-        m_frame.setMinimumSize(new Dimension(340, 330));
+        m_frame.setMinimumSize(new Dimension(390, 330));
 		//JPanel theOne = new JPanel();
 		//theOne.add(new JScrollPane(view));
 		m_panel = new JPanel(new BorderLayout());

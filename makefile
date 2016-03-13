@@ -9,7 +9,12 @@ FILE=
 CLASSES = \
 	Fotag.java \
 	ImageModel.java \
+	ImageCollectionModel.java \
+	AbstractImageView.java \
 	ImageView.java \
+	ImageListView.java \
+	ImageCollectionView.java \
+	ImageCollectionListView.java \
     ViewInterface.java \
 	Toolbar.java
 

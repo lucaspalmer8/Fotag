@@ -125,13 +125,13 @@ public class Toolbar extends JPanel implements ViewInterface {
 		try {
             img = ImageIO.read(new File("loadicon.png"));
         } catch (IOException e) {}
-        newimg = img.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        newimg = img.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 
 		JButton loadButton = new JButton(new ImageIcon(newimg));
         loadButton.setBackground(Color.WHITE);
         loadButton.setFocusPainted(false);
         //m_listView.setBorderPainted(false);
-        loadButton.setPreferredSize(new Dimension(50, 50));
+        loadButton.setPreferredSize(new Dimension(35, 35));
 		loadButton.addActionListener(loadPictureListener);
 	
 		JPanel panel = new JPanel();
@@ -155,11 +155,6 @@ public class Toolbar extends JPanel implements ViewInterface {
 //		center.add(s4);
 //		panel.add(label);
 
-		JPanel panel2 = new JPanel();
-		panel2.setLayout(new BoxLayout(panel2, BoxLayout.X_AXIS));
-		panel2.setBackground(Color.WHITE);
-		panel2.add(loadButton);
-
 		JPanel spare1 = new JPanel();
 		JPanel spare2 = new JPanel();
 		spare1.setBackground(Color.WHITE);
@@ -168,7 +163,7 @@ public class Toolbar extends JPanel implements ViewInterface {
         try {
             img = ImageIO.read(new File("reset.png"));
         } catch (IOException e) {}
-        newimg = img.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        newimg = img.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
 
 		JButton resetButton = new JButton(new ImageIcon(newimg));
 		resetButton.addActionListener(new ActionListener() {
@@ -179,8 +174,9 @@ public class Toolbar extends JPanel implements ViewInterface {
                 //updateView();
             }
         });
-		resetButton.setPreferredSize(new Dimension(25, 25));
+		resetButton.setPreferredSize(new Dimension(30, 30));
 		resetButton.setFocusPainted(false);
+		resetButton.setBackground(Color.WHITE);
 
 		JPanel theOne = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		theOne.setBackground(Color.WHITE);
@@ -189,16 +185,26 @@ public class Toolbar extends JPanel implements ViewInterface {
 		panel3.setBackground(Color.WHITE);
 		panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
 		panel3.add(spare1);
+
+		JLabel filter = new JLabel();
+        filter.setFont(new Font("Courier New", Font.BOLD, 12));
+        filter.setText(" Filter by:");
 		
+		//JPanel rating = new JPanel();
+		//rating.setLayout(new BoxLayout(rating, BoxLayout.Y_AXIS));
+		//rating.add(filter);
+		//rating.add(m_ratingBar);
+
+		theOne.add(loadButton);
+		theOne.add(filter);
 		theOne.add(m_ratingBar);
 		theOne.add(resetButton);
 		panel3.add(theOne);
 
 		panel3.add(spare2);
-		panel2.add(panel3);
 
 		add(panel, BorderLayout.WEST);
-		add(panel2, BorderLayout.EAST);
+		add(panel3, BorderLayout.EAST);
 		add(label, BorderLayout.CENTER);			
     }
 	
