@@ -86,8 +86,21 @@ public class ImageListView extends AbstractImageView {
 		m_rightPanel.add(name);
 		m_rightPanel.add(date);
 		m_rightPanel.add(bar);
+		m_rightPanel.setPreferredSize(new Dimension((int)m_rightPanel.getPreferredSize().getWidth(), 120));
+		m_rightPanel.setMaximumSize(new Dimension((int)m_rightPanel.getMaximumSize().getWidth(), 120));
 
-		add(m_rightPanel, BorderLayout.EAST);
+		JPanel spare = new JPanel();
+		JPanel spare2 = new JPanel();
+		spare2.setBackground(Color.WHITE);
+		spare.setBackground(Color.WHITE);
+		JPanel format = new JPanel();
+		format.setLayout(new BoxLayout(format, BoxLayout.Y_AXIS));
+		format.setBackground(Color.WHITE);
+		format.add(spare);
+		format.add(m_rightPanel);
+		format.add(spare2);
+		
+		add(format, BorderLayout.EAST);
     }
 
 	@Override
