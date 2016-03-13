@@ -5,14 +5,11 @@ import java.io.*;
 import java.awt.image.*;
 import javax.imageio.ImageIO;
 import java.util.ArrayList;
-import java.nio.file.*;
 import java.nio.*;
-
 import java.nio.file.*;
 import java.nio.file.Path;
 import java.nio.file.attribute.*;
 import java.io.IOException;
-
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
@@ -23,7 +20,6 @@ public abstract class AbstractImageView extends JPanel implements ViewInterface 
 	private JDialog m_dialog;
 	private static Image STAR = null;
 	private static Image EMPTY_STAR = null;
-	private JPanel m_dataPanel = new JPanel();
 
 	public AbstractImageView(ImageModel model) {
 		if (STAR == null) {
@@ -85,12 +81,7 @@ public abstract class AbstractImageView extends JPanel implements ViewInterface 
 	@Override
 	public void notifyView() {
 		int rating = m_model.getRating();
-		//m_bottomPanel.remove(m_ratingBar);
-		//m_ratingBar = new RatingBar(rating);
-		//m_bottomPanel.add(m_ratingBar);
 		m_ratingBar.updateRatingBar(rating);
-		//revalidate();
-		//repaint();
 	}
 
 	private class FullStar extends JLabel {
