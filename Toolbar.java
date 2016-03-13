@@ -53,17 +53,13 @@ public class Toolbar extends JPanel implements ViewInterface {
 		m_gridView.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//m_listView.setEnabled(true);
-				//m_listView.setSelected(false);
 				m_gridView.setEnabled(false);
 				m_model.enableGridView();
-				//setEnabled(false);
 				m_listView.setEnabled(true);
 			}
 		});
 		m_gridView.setBackground(Color.WHITE);
 		m_gridView.setFocusPainted(false);
-		//m_gridView.setBorderPainted(false);
 		m_gridView.setPreferredSize(new Dimension(50, 50));
 		m_gridView.setSelected(true);	
 		m_gridView.setEnabled(false);
@@ -77,17 +73,13 @@ public class Toolbar extends JPanel implements ViewInterface {
         m_listView.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-				//m_gridView.setEnabled(true);
-				//m_gridView.setSelected(false);
 				m_listView.setEnabled(false);
 				m_model.enableListView();
-				//setEnabled(false);
 				m_gridView.setEnabled(true);
             }
         });
 		m_listView.setBackground(Color.WHITE);
 		m_listView.setFocusPainted(false);
-//		m_listView.setBorderPainted(false);
 		m_listView.setPreferredSize(new Dimension(50, 50));
         
 		ActionListener loadPictureListener = new ActionListener() {
@@ -95,14 +87,10 @@ public class Toolbar extends JPanel implements ViewInterface {
             public void actionPerformed(ActionEvent e) {
                 int returnVal = m_chooser.showOpenDialog(m_model.getFrame());
 				File[] files = m_chooser.getSelectedFiles();
-				//System.out.println("lendghtlak :::: " +files.length);
 				if (files.length == 0 || returnVal > 0) {
 					return;
 				}
-				//System.out.println(returnVal);
-                //String path = m_chooser.getSelectedFile().getAbsolutePath();
-                //String fileName = m_chooser.getSelectedFile().getName();
-
+				
 				BufferedImage img = null;
 		        Image newimg = null;
 				for (File file : files) {
@@ -130,7 +118,6 @@ public class Toolbar extends JPanel implements ViewInterface {
 		JButton loadButton = new JButton(new ImageIcon(newimg));
         loadButton.setBackground(Color.WHITE);
         loadButton.setFocusPainted(false);
-        //m_listView.setBorderPainted(false);
         loadButton.setPreferredSize(new Dimension(35, 35));
 		loadButton.addActionListener(loadPictureListener);
 	
@@ -140,20 +127,9 @@ public class Toolbar extends JPanel implements ViewInterface {
 		panel.add(m_gridView);
 		panel.add(m_listView);
 		
-//		JPanel s3 = new JPanel();
-//		JPanel s4 = new JPanel();
-//		s3.setBackground(Color.WHITE);
-//		s4.setBackground(Color.WHITE);
-//		JPanel center = new JPanel();
-//		center.setBackground(Color.WHITE);
 		JLabel label = new JLabel();
 		label.setFont(new Font("Courier New", Font.BOLD, 60));
 		label.setText(" Fotag!");
-		//label.setPreferredSize(new Dimension(300, 100));
-//		center.add(s3);
-//		center.add(label);
-//		center.add(s4);
-//		panel.add(label);
 
 		JPanel spare1 = new JPanel();
 		JPanel spare2 = new JPanel();
@@ -190,17 +166,11 @@ public class Toolbar extends JPanel implements ViewInterface {
         filter.setFont(new Font("Courier New", Font.BOLD, 12));
         filter.setText(" Filter by:");
 		
-		//JPanel rating = new JPanel();
-		//rating.setLayout(new BoxLayout(rating, BoxLayout.Y_AXIS));
-		//rating.add(filter);
-		//rating.add(m_ratingBar);
-
 		theOne.add(loadButton);
 		theOne.add(filter);
 		theOne.add(m_ratingBar);
 		theOne.add(resetButton);
 		panel3.add(theOne);
-
 		panel3.add(spare2);
 
 		add(panel, BorderLayout.WEST);
@@ -283,16 +253,5 @@ public class Toolbar extends JPanel implements ViewInterface {
     }
 
 	@Override
-	public void notifyView() {
-
-	}
-
-	@Override    
-   	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-       	Graphics2D g2 = (Graphics2D) g; // cast to get 2D drawing methods
-       	g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,  // antialiasing look nicer
-           	    RenderingHints.VALUE_ANTIALIAS_ON);
-       	//for (Model.Stroke stroke : m_model.getStrokeList()) {
-  	}
+	public void notifyView() {}
 }

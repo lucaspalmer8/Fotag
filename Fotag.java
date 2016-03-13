@@ -5,10 +5,10 @@ import java.awt.event.*;
 
 public class Fotag {
 
-    public JFrame m_frame;
-	public JPanel m_panel;
-	public JScrollPane m_gridView;
-	public JScrollPane m_listView; 
+    private JFrame m_frame;
+	private JPanel m_panel;
+	private JScrollPane m_gridView;
+	private JScrollPane m_listView; 
 
 	public static void main(String[] args) {
 		Fotag fotag = new Fotag();
@@ -37,7 +37,6 @@ public class Fotag {
         m_frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                System.out.println("Hello!!!");
                 model.saveState();
             }
         });
@@ -45,16 +44,32 @@ public class Fotag {
         m_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         m_frame.setResizable(true);
         m_frame.setSize(900, 600);
-        m_frame.setMinimumSize(new Dimension(390, 330));
-		//JPanel theOne = new JPanel();
-		//theOne.add(new JScrollPane(view));
+        m_frame.setMinimumSize(new Dimension(400, 330));
+		
 		m_panel = new JPanel(new BorderLayout());
        	m_gridView = new JScrollPane(view, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		m_panel.add(m_gridView, BorderLayout.CENTER);
 		m_listView = new JScrollPane(listView, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		
+		m_panel.add(m_gridView, BorderLayout.CENTER);
 		m_panel.add(toolbar, BorderLayout.NORTH);
+		
 		m_frame.add(m_panel);
-		//model.notifyViews();
         m_frame.setVisible(true);
     }
+
+	public JFrame getFrame() {
+		return m_frame;
+	}
+
+	public JPanel getPanel() {
+		return m_panel;
+	}
+
+	public JScrollPane getGridView() {
+		return m_gridView;
+	}
+
+	public JScrollPane getListView() {
+		return m_listView;
+	}
 }

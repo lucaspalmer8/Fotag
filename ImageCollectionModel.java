@@ -22,8 +22,7 @@ public class ImageCollectionModel {
 			try {
 				line = bufferedReader.readLine();
 				int size = Integer.parseInt(line);
-				for (int i = 0; i < size; i++) {
-					
+				for (int i = 0; i < size; i++) {					
 					String path = bufferedReader.readLine();
 					line = bufferedReader.readLine();
 					int rating = Integer.parseInt(line);
@@ -57,27 +56,32 @@ public class ImageCollectionModel {
 	}
 
 	public JFrame getFrame() {
-		return m_fotag.m_frame;
+		return m_fotag.getFrame();
 	}
 
 	public void addImage(String path) {
+		for (ImageModel model : m_images) {
+			if (path.equals(model.getPath())) {
+				return;
+			}
+		}
 		m_images.add(new ImageModel(path, 0, this));
 		notifyViews();
 	}
 
 	public void enableGridView() {
-		m_fotag.m_panel.remove(m_fotag.m_listView);
-		m_fotag.m_panel.add(m_fotag.m_gridView, BorderLayout.CENTER);
-		m_fotag.m_panel.revalidate();
-		m_fotag.m_panel.repaint();
+		m_fotag.getPanel().remove(m_fotag.getListView());
+		m_fotag.getPanel().add(m_fotag.getGridView(), BorderLayout.CENTER);
+		m_fotag.getPanel().revalidate();
+		m_fotag.getPanel().repaint();
 		notifyViews();
 	}
 
 	public void enableListView() {
-        m_fotag.m_panel.remove(m_fotag.m_gridView);
-        m_fotag.m_panel.add(m_fotag.m_listView, BorderLayout.CENTER);
-        m_fotag.m_panel.revalidate();
-        m_fotag.m_panel.repaint();
+        m_fotag.getPanel().remove(m_fotag.getGridView());
+        m_fotag.getPanel().add(m_fotag.getListView(), BorderLayout.CENTER);
+        m_fotag.getPanel().revalidate();
+        m_fotag.getPanel().repaint();
 		notifyViews();
     }
 

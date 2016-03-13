@@ -5,14 +5,11 @@ import java.io.*;
 import java.awt.image.*;
 import javax.imageio.ImageIO;
 import java.util.ArrayList;
-import java.nio.file.*;
 import java.nio.*;
-
 import java.nio.file.*;
 import java.nio.file.Path;
 import java.nio.file.attribute.*;
 import java.io.IOException;
-
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
@@ -31,9 +28,9 @@ public class ImageView extends AbstractImageView {
 		} catch (IOException ex) {
 			System.out.println(ex);
 		}
-		JPanel m_bottomPanel = new JPanel();
-		m_bottomPanel.setLayout(new BoxLayout(m_bottomPanel, BoxLayout.Y_AXIS));
-		m_bottomPanel.setBackground(Color.WHITE);
+		JPanel bottomPanel = new JPanel();
+		bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
+		bottomPanel.setBackground(Color.WHITE);
 		
 		JPanel date = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		date.setBackground(Color.WHITE);
@@ -42,11 +39,9 @@ public class ImageView extends AbstractImageView {
 	
 		String DATE_FORMAT = "MM/dd/yyyy";
     	SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
-    	//System.out.println("Formated Date " + sdf.format(date));
 
 		dateCreated.setText(sdf.format(new Date(attrs.creationTime().toMillis())).toString());
 		date.add(dateCreated);
-		date.setBackground(Color.WHITE);
 		JPanel name = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		name.setBackground(Color.WHITE);
 		JLabel fileName = new JLabel(new File(m_model.getPath()).getName());
@@ -75,11 +70,10 @@ public class ImageView extends AbstractImageView {
 
 		date.add(reset);
 
-		m_bottomPanel.add(name);
-		m_bottomPanel.add(date);
-		//m_bottomPanel.add(m_ratingBar);
+		bottomPanel.add(name);
+		bottomPanel.add(date);
 
-		add(m_bottomPanel, BorderLayout.SOUTH);
+		add(bottomPanel, BorderLayout.SOUTH);
     }
 
 	@Override

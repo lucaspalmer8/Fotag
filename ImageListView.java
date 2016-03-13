@@ -5,14 +5,11 @@ import java.io.*;
 import java.awt.image.*;
 import javax.imageio.ImageIO;
 import java.util.ArrayList;
-import java.nio.file.*;
 import java.nio.*;
-
 import java.nio.file.*;
 import java.nio.file.Path;
 import java.nio.file.attribute.*;
 import java.io.IOException;
-
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
@@ -33,9 +30,9 @@ public class ImageListView extends AbstractImageView {
 		} catch (IOException ex) {
 			System.out.println(ex);
 		}
-		JPanel m_rightPanel = new JPanel();
-		m_rightPanel.setLayout(new BoxLayout(m_rightPanel, BoxLayout.Y_AXIS));
-		m_rightPanel.setBackground(Color.WHITE);
+		JPanel rightPanel = new JPanel();
+		rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
+		rightPanel.setBackground(Color.WHITE);
 		
 		JPanel date = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		date.setBackground(Color.WHITE);
@@ -44,22 +41,15 @@ public class ImageListView extends AbstractImageView {
 	
 		String DATE_FORMAT = "MM/dd/yyyy";
     	SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
-    	//System.out.println("Formated Date " + sdf.format(date));
 
 		dateCreated.setText(sdf.format(new Date(attrs.creationTime().toMillis())).toString());
 		date.add(dateCreated);
-		date.setBackground(Color.WHITE);
 		
 		JPanel name = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		name.setBackground(Color.WHITE);
 		JLabel fileName = new JLabel(new File(m_model.getPath()).getName());
 		fileName.setBackground(Color.WHITE);
 		name.add(fileName);
-
-		//m_rightPanel.add(name);
-		//m_rightPanel.add(date);
-
-		//m_rightPanel.add(m_ratingBar);
 
 		JPanel bar = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		bar.setBackground(Color.WHITE);
@@ -83,11 +73,11 @@ public class ImageListView extends AbstractImageView {
 
 		bar.add(reset);
 
-		m_rightPanel.add(name);
-		m_rightPanel.add(date);
-		m_rightPanel.add(bar);
-		m_rightPanel.setPreferredSize(new Dimension((int)m_rightPanel.getPreferredSize().getWidth(), 120));
-		m_rightPanel.setMaximumSize(new Dimension((int)m_rightPanel.getMaximumSize().getWidth(), 120));
+		rightPanel.add(name);
+		rightPanel.add(date);
+		rightPanel.add(bar);
+		rightPanel.setPreferredSize(new Dimension((int)rightPanel.getPreferredSize().getWidth(), 120));
+		rightPanel.setMaximumSize(new Dimension((int)rightPanel.getMaximumSize().getWidth(), 120));
 
 		JPanel spare = new JPanel();
 		JPanel spare2 = new JPanel();
@@ -97,7 +87,7 @@ public class ImageListView extends AbstractImageView {
 		format.setLayout(new BoxLayout(format, BoxLayout.Y_AXIS));
 		format.setBackground(Color.WHITE);
 		format.add(spare);
-		format.add(m_rightPanel);
+		format.add(rightPanel);
 		format.add(spare2);
 		
 		add(format, BorderLayout.EAST);
