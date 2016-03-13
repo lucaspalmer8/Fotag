@@ -11,7 +11,7 @@ public class ImageCollectionModel {
 	private Fotag m_fotag;
 	private int m_ratingFilter = 0;
 
-   	public ImageCollectionModel(Fotag fotag) {
+	public ImageCollectionModel(Fotag fotag) {
 		m_fotag = fotag;
 		try {
 			FileReader fileReader = new FileReader("laststate.txt");
@@ -32,8 +32,8 @@ public class ImageCollectionModel {
 				bufferedReader.close();
 			}
 		} catch(FileNotFoundException ex) {
-        } catch(IOException ex) {
-        }		
+		} catch(IOException ex) {
+		}		
 	}
 
 	public void setRatingFilter(int filter) {
@@ -78,12 +78,12 @@ public class ImageCollectionModel {
 	}
 
 	public void enableListView() {
-        m_fotag.getPanel().remove(m_fotag.getGridView());
-        m_fotag.getPanel().add(m_fotag.getListView(), BorderLayout.CENTER);
-        m_fotag.getPanel().revalidate();
-        m_fotag.getPanel().repaint();
+		m_fotag.getPanel().remove(m_fotag.getGridView());
+		m_fotag.getPanel().add(m_fotag.getListView(), BorderLayout.CENTER);
+		m_fotag.getPanel().revalidate();
+		m_fotag.getPanel().repaint();
 		notifyViews();
-    }
+	}
 
 	public void addObserver(ViewInterface view) {
 		m_observers.add(view);

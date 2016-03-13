@@ -8,16 +8,16 @@ public class ImageCollectionView extends JPanel implements ViewInterface {
 	private ImageCollectionModel m_model;
 	private ArrayList<ImageView> m_imageViews = new ArrayList<ImageView>();
 
-   	public ImageCollectionView(ImageCollectionModel model) {
+	public ImageCollectionView(ImageCollectionModel model) {
 		m_model = model;
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		addComponentListener(new ComponentAdapter() {
 			@Override
-    		public void componentResized(ComponentEvent e) {
-    			resetLayout();
+			public void componentResized(ComponentEvent e) {
+				resetLayout();
 			}
 		});
-    }
+	}
 
 	public void resetLayout() {
 		removeAll();
@@ -36,23 +36,23 @@ public class ImageCollectionView extends JPanel implements ViewInterface {
 			}
 			if (addedToRow >= columns) {
 				add(panel);
-                addedToRow = 0;
-                panel = new JPanel();
-                panel.setLayout(new GridLayout(0, columns));
+				addedToRow = 0;
+				panel = new JPanel();
+				panel.setLayout(new GridLayout(0, columns));
 			}
 			JPanel panel1 = new JPanel();
-            panel1.setLayout(new BoxLayout(panel1, BoxLayout.X_AXIS));
+			panel1.setLayout(new BoxLayout(panel1, BoxLayout.X_AXIS));
 
-            JPanel panel2 = new JPanel();
-            panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
+			JPanel panel2 = new JPanel();
+			panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
 
-            panel1.add(new JPanel());
-            panel1.add(panel2);
-            panel1.add(new JPanel());
+			panel1.add(new JPanel());
+			panel1.add(panel2);
+			panel1.add(new JPanel());
 
-            panel2.add(new JPanel());
-            panel2.add(m_imageViews.get(i));
-            panel2.add(new JPanel());
+			panel2.add(new JPanel());
+			panel2.add(m_imageViews.get(i));
+			panel2.add(new JPanel());
 
 			panel.add(panel1);
 			addedToRow++;
@@ -69,8 +69,8 @@ public class ImageCollectionView extends JPanel implements ViewInterface {
 	@Override
 	public void notifyView() {
 		for (ImageView view : m_imageViews) {
-            view.notifyView();
-        }
+			view.notifyView();
+		}
 		if (m_imageViews.size() != m_model.getImages().size()) {
 			m_imageViews = new ArrayList<ImageView>();
 			for(int i = 0; i < m_model.getImages().size(); i++) {
@@ -80,8 +80,8 @@ public class ImageCollectionView extends JPanel implements ViewInterface {
 		resetLayout();
 	}
 
-    @Override
-    public Dimension getPreferredSize() {
-        return new Dimension(getParent().getWidth(), (int)super.getPreferredSize().getHeight());
-    }
+	@Override
+	public Dimension getPreferredSize() {
+		return new Dimension(getParent().getWidth(), (int)super.getPreferredSize().getHeight());
+	}
 }

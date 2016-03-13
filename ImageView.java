@@ -18,13 +18,13 @@ public class ImageView extends AbstractImageView {
 	public static int WIDTH = 225;
 	public static int HEIGHT = 300;
 
-   	public ImageView(ImageModel model) {
+	public ImageView(ImageModel model) {
 		super(model);
 
 		Path file = Paths.get(m_model.getPath());
 		BasicFileAttributes attrs = null;
 		try {
-    		attrs = Files.readAttributes(file, BasicFileAttributes.class);
+			attrs = Files.readAttributes(file, BasicFileAttributes.class);
 		} catch (IOException ex) {
 			System.out.println(ex);
 		}
@@ -38,7 +38,7 @@ public class ImageView extends AbstractImageView {
 		dateCreated.setBackground(Color.WHITE);
 	
 		String DATE_FORMAT = "MM/dd/yyyy";
-    	SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
 
 		dateCreated.setText(sdf.format(new Date(attrs.creationTime().toMillis())).toString());
 		date.add(dateCreated);
@@ -51,22 +51,22 @@ public class ImageView extends AbstractImageView {
 		date.add(m_ratingBar);
 
 		BufferedImage img = null;
-        Image newimg = null;
+		Image newimg = null;
 		try {
-            img = ImageIO.read(new File("reset.png"));
-        } catch (IOException e) {}
-        newimg = img.getScaledInstance(15, 15, Image.SCALE_SMOOTH);
+			img = ImageIO.read(new File("reset.png"));
+		} catch (IOException e) {}
+		newimg = img.getScaledInstance(15, 15, Image.SCALE_SMOOTH);
 		JButton reset = new JButton(new ImageIcon(newimg));
 		reset.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				m_model.setRating(0);
-                notifyView();
+				notifyView();
 			}
 		});
 		reset.setPreferredSize(new Dimension(20, 20));
 		reset.setBackground(Color.WHITE);
-        reset.setFocusPainted(false);
+		reset.setFocusPainted(false);
 
 		date.add(reset);
 
@@ -74,12 +74,12 @@ public class ImageView extends AbstractImageView {
 		bottomPanel.add(date);
 
 		add(bottomPanel, BorderLayout.SOUTH);
-    }
+	}
 
 	@Override
-    public Dimension getPreferredSize() {
-   		return new Dimension(WIDTH, HEIGHT);
-    }
+	public Dimension getPreferredSize() {
+		return new Dimension(WIDTH, HEIGHT);
+	}
 
 	@Override
 	public Dimension getMaximumSize() {

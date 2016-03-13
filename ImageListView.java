@@ -18,15 +18,15 @@ public class ImageListView extends AbstractImageView {
 	public static int WIDTH = 360;
 	public static int HEIGHT = 240;
 
-   	public ImageListView(ImageModel model) {
+	public ImageListView(ImageModel model) {
 		super(model);
 		BufferedImage img = null;
-        Image newimg = null;
+		Image newimg = null;
 
 		Path file = Paths.get(m_model.getPath());
 		BasicFileAttributes attrs = null;
 		try {
-    		attrs = Files.readAttributes(file, BasicFileAttributes.class);
+			attrs = Files.readAttributes(file, BasicFileAttributes.class);
 		} catch (IOException ex) {
 			System.out.println(ex);
 		}
@@ -40,7 +40,7 @@ public class ImageListView extends AbstractImageView {
 		dateCreated.setBackground(Color.WHITE);
 	
 		String DATE_FORMAT = "MM/dd/yyyy";
-    	SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
 
 		dateCreated.setText(sdf.format(new Date(attrs.creationTime().toMillis())).toString());
 		date.add(dateCreated);
@@ -56,20 +56,20 @@ public class ImageListView extends AbstractImageView {
 		bar.add(m_ratingBar);
 
 		try {
-            img = ImageIO.read(new File("reset.png"));
-        } catch (IOException e) {}
-        newimg = img.getScaledInstance(15, 15, Image.SCALE_SMOOTH);
+			img = ImageIO.read(new File("reset.png"));
+		} catch (IOException e) {}
+		newimg = img.getScaledInstance(15, 15, Image.SCALE_SMOOTH);
 		JButton reset = new JButton(new ImageIcon(newimg));
 		reset.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				m_model.setRating(0);
-                notifyView();
+				notifyView();
 			}
 		});
 		reset.setPreferredSize(new Dimension(20, 20));
 		reset.setBackground(Color.WHITE);
-        reset.setFocusPainted(false);
+		reset.setFocusPainted(false);
 
 		bar.add(reset);
 
@@ -91,12 +91,12 @@ public class ImageListView extends AbstractImageView {
 		format.add(spare2);
 		
 		add(format, BorderLayout.EAST);
-    }
+	}
 
 	@Override
-    public Dimension getPreferredSize() {
-   		return new Dimension(WIDTH, HEIGHT);
-    }
+	public Dimension getPreferredSize() {
+		return new Dimension(WIDTH, HEIGHT);
+	}
 
 	@Override
 	public Dimension getMaximumSize() {

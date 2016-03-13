@@ -8,16 +8,16 @@ public class ImageCollectionListView extends JPanel implements ViewInterface {
 	private ImageCollectionModel m_model;
 	private ArrayList<ImageListView> m_imageViews = new ArrayList<ImageListView>();
 
-   	public ImageCollectionListView(ImageCollectionModel model) {
+	public ImageCollectionListView(ImageCollectionModel model) {
 		m_model = model;
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-    }
+	}
 
 	@Override
 	public void notifyView() {
 		for (ImageListView view : m_imageViews) {
-            view.notifyView();
-        }
+			view.notifyView();
+		}
 
 		if (m_imageViews.size() != m_model.getImages().size()) {
 			m_imageViews = new ArrayList<ImageListView>();
@@ -39,8 +39,8 @@ public class ImageCollectionListView extends JPanel implements ViewInterface {
 		repaint();
 	}
 
-    @Override
-    public Dimension getPreferredSize() {
-        return new Dimension(getParent().getWidth(), (int)super.getPreferredSize().getHeight());
-    }
+	@Override
+	public Dimension getPreferredSize() {
+		return new Dimension(getParent().getWidth(), (int)super.getPreferredSize().getHeight());
+	}
 }

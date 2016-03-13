@@ -8,11 +8,11 @@ public class ImageModel {
 	private int m_rating;
 	private ImageCollectionModel m_model;
 
-   	public ImageModel(String path, ImageCollectionModel model) {
+	public ImageModel(String path, ImageCollectionModel model) {
 		m_model = model;
 		m_path = path;
 		m_rating = 0;
-    }
+	}
 
 	public ImageModel(String path, int rating, ImageCollectionModel model) {
 		m_model = model;

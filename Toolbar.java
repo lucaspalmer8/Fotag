@@ -16,24 +16,24 @@ public class Toolbar extends JPanel implements ViewInterface {
 	private static Image STAR = null;
 	private static Image EMPTY_STAR = null;
 
-   	public Toolbar(ImageCollectionModel model) {
+	public Toolbar(ImageCollectionModel model) {
 		if (STAR == null) {
-            BufferedImage img = null;
-            Image newimg = null;
-            try {
-                img = ImageIO.read(new File("fullstar.png"));
-            } catch (IOException e) {}
-            STAR = img.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
-        }
+			BufferedImage img = null;
+			Image newimg = null;
+			try {
+				img = ImageIO.read(new File("fullstar.png"));
+			} catch (IOException e) {}
+			STAR = img.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
+		}
 
-        if (EMPTY_STAR == null) {
-            BufferedImage img = null;
-            Image newimg = null;
-            try {
-                img = ImageIO.read(new File("emptystar.png"));
-            } catch (IOException e) {}
-            EMPTY_STAR = img.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
-        }
+		if (EMPTY_STAR == null) {
+			BufferedImage img = null;
+			Image newimg = null;
+			try {
+				img = ImageIO.read(new File("emptystar.png"));
+			} catch (IOException e) {}
+			EMPTY_STAR = img.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
+		}
 
 		m_chooser.setMultiSelectionEnabled(true);
 		m_model = model;
@@ -43,11 +43,11 @@ public class Toolbar extends JPanel implements ViewInterface {
 		setLayout(new BorderLayout());
 	
 		BufferedImage img = null;
-        Image newimg = null;
-        try {
-            img = ImageIO.read(new File("grid.png"));
-        } catch (IOException e) {}
-        newimg = img.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+		Image newimg = null;
+		try {
+			img = ImageIO.read(new File("grid.png"));
+		} catch (IOException e) {}
+		newimg = img.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 
 		m_gridView = new JButton(new ImageIcon(newimg));
 		m_gridView.addActionListener(new ActionListener() {
@@ -65,42 +65,42 @@ public class Toolbar extends JPanel implements ViewInterface {
 		m_gridView.setEnabled(false);
 
 		try {
-            img = ImageIO.read(new File("list.png"));
-        } catch (IOException e) {}
-        newimg = img.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+			img = ImageIO.read(new File("list.png"));
+		} catch (IOException e) {}
+		newimg = img.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 
 		m_listView = new JButton(new ImageIcon(newimg));
-        m_listView.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+		m_listView.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
 				m_listView.setEnabled(false);
 				m_model.enableListView();
 				m_gridView.setEnabled(true);
-            }
-        });
+			}
+		});
 		m_listView.setBackground(Color.WHITE);
 		m_listView.setFocusPainted(false);
 		m_listView.setPreferredSize(new Dimension(50, 50));
-        
+		
 		ActionListener loadPictureListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int returnVal = m_chooser.showOpenDialog(m_model.getFrame());
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int returnVal = m_chooser.showOpenDialog(m_model.getFrame());
 				File[] files = m_chooser.getSelectedFiles();
 				if (files.length == 0 || returnVal > 0) {
 					return;
 				}
 				
 				BufferedImage img = null;
-		        Image newimg = null;
+				Image newimg = null;
 				for (File file : files) {
 					try {
-            			img = ImageIO.read(file);
-        			} catch (Exception ex) {}
+						img = ImageIO.read(file);
+					} catch (Exception ex) {}
 				
 					if (img == null) {
 						JOptionPane.showMessageDialog(m_model.getFrame(), "You must only select photos.");
-                    	return;
+						return;
 					}
 				}	
 	
@@ -111,14 +111,14 @@ public class Toolbar extends JPanel implements ViewInterface {
 		};
 
 		try {
-            img = ImageIO.read(new File("loadicon.png"));
-        } catch (IOException e) {}
-        newimg = img.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+			img = ImageIO.read(new File("loadicon.png"));
+		} catch (IOException e) {}
+		newimg = img.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 
 		JButton loadButton = new JButton(new ImageIcon(newimg));
-        loadButton.setBackground(Color.WHITE);
-        loadButton.setFocusPainted(false);
-        loadButton.setPreferredSize(new Dimension(35, 35));
+		loadButton.setBackground(Color.WHITE);
+		loadButton.setFocusPainted(false);
+		loadButton.setPreferredSize(new Dimension(35, 35));
 		loadButton.addActionListener(loadPictureListener);
 	
 		JPanel panel = new JPanel();
@@ -136,20 +136,20 @@ public class Toolbar extends JPanel implements ViewInterface {
 		spare1.setBackground(Color.WHITE);
 		spare2.setBackground(Color.WHITE);
 
-        try {
-            img = ImageIO.read(new File("reset.png"));
-        } catch (IOException e) {}
-        newimg = img.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
+		try {
+			img = ImageIO.read(new File("reset.png"));
+		} catch (IOException e) {}
+		newimg = img.getScaledInstance(25, 25, Image.SCALE_SMOOTH);
 
 		JButton resetButton = new JButton(new ImageIcon(newimg));
 		resetButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                m_model.setRatingFilter(0);
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				m_model.setRatingFilter(0);
 				m_ratingBar.updateRatingBar(0);
-                //updateView();
-            }
-        });
+				//updateView();
+			}
+		});
 		resetButton.setPreferredSize(new Dimension(30, 30));
 		resetButton.setFocusPainted(false);
 		resetButton.setBackground(Color.WHITE);
@@ -163,8 +163,8 @@ public class Toolbar extends JPanel implements ViewInterface {
 		panel3.add(spare1);
 
 		JLabel filter = new JLabel();
-        filter.setFont(new Font("Courier New", Font.BOLD, 12));
-        filter.setText(" Filter by:");
+		filter.setFont(new Font("Courier New", Font.BOLD, 12));
+		filter.setText(" Filter by:");
 		
 		theOne.add(loadButton);
 		theOne.add(filter);
@@ -176,7 +176,7 @@ public class Toolbar extends JPanel implements ViewInterface {
 		add(panel, BorderLayout.WEST);
 		add(panel3, BorderLayout.EAST);
 		add(label, BorderLayout.CENTER);			
-    }
+	}
 	
 	private class FullStar extends JLabel {
 		private int m_index;
@@ -187,32 +187,32 @@ public class Toolbar extends JPanel implements ViewInterface {
 			m_index = index;
 			setIcon(new ImageIcon(STAR));
 			addMouseListener(new MouseAdapter() {
-                @Override
-                public void mousePressed(MouseEvent e) {
-                    m_model.setRatingFilter(m_index);
+				@Override
+				public void mousePressed(MouseEvent e) {
+					m_model.setRatingFilter(m_index);
 					m_ratingBar.updateRatingBar(m_index);
-                }
-            });
+				}
+			});
 		}
 	}
 
 	private class EmptyStar extends JLabel {
-        private int m_index;
+		private int m_index;
 
-        public EmptyStar(int index) {
+		public EmptyStar(int index) {
 			setOpaque(true);
 			setBackground(Color.WHITE);
 			m_index = index;
-            setIcon(new ImageIcon(EMPTY_STAR));
-            addMouseListener(new MouseAdapter() {
-                @Override
-                public void mousePressed(MouseEvent e) {
+			setIcon(new ImageIcon(EMPTY_STAR));
+			addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent e) {
 					m_model.setRatingFilter(m_index);
 					m_ratingBar.updateRatingBar(m_index);
-                }
-            });
-        }
-    }
+				}
+			});
+		}
+	}
 
 	
 	private class RatingBar extends JPanel {
@@ -234,13 +234,13 @@ public class Toolbar extends JPanel implements ViewInterface {
 		public void updateRatingBar(int rating) {
 			removeAll();
 			JPanel panel = new JPanel();
-            panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-            for (int i = 1; i <= rating; i++) {
-                panel.add(new FullStar(i));
-            }
-            for (int i = rating + 1; i <= 5; i++) {
-                panel.add(new EmptyStar(i));
-            }
+			panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+			for (int i = 1; i <= rating; i++) {
+				panel.add(new FullStar(i));
+			}
+			for (int i = rating + 1; i <= 5; i++) {
+				panel.add(new EmptyStar(i));
+			}
 			add(panel);
 			revalidate();
 			repaint();
@@ -248,9 +248,9 @@ public class Toolbar extends JPanel implements ViewInterface {
 	}
 
 	@Override
-    public Dimension getPreferredSize() {
-    	return new Dimension(100, 80);
-    }
+	public Dimension getPreferredSize() {
+		return new Dimension(100, 80);
+	}
 
 	@Override
 	public void notifyView() {}
